@@ -1,12 +1,12 @@
-<!-- templates/question_detail.html -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalle de la pregunta</title>
-</head>
-<body>
-    <h1>Estás viendo la pregunta {{ question.id }}</h1>
-    <h1>La pregunta es:  {{ question.question_text }}</h1>
-</body>
-</html>
+<form action="{% url 'vote' question.id %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+    <legend><h1>{{ question.question_text }}</h1></legend>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% for choice in question.choice_set.all %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
+    </fieldset>
+    <input type="submit" value="Vote">
+</form>

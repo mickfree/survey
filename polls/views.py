@@ -32,6 +32,7 @@ def detail(request, question_id):
     return render(request,"question_detail.html",context)
     # return HttpResponse("You're looking at question %s." %question_id)
     
+
 # A shortcut: get_object_or_404()
     
 def results(request, question_id):
@@ -46,4 +47,6 @@ def results(request, question_id):
 def vote(request, question_id):
     return HttpResponse("You're voting on question %s." %question_id)
 
-
+# votes
+def vote(request, question_id):
+    return HttpResponse("You're voting on question %s." % question_id)
