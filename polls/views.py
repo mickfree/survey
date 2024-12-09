@@ -1,9 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-<<<<<<< HEAD
-from django.http import HttpResponse, Http404,HttpResponseRedirect
-=======
 from django.http import HttpResponse, Http404, HttpResponseRedirect
->>>>>>> 28dfa9e49e2ee2e34f303061a09b81a73157f7b4
 from .models import Question, Choice
 from django.template import loader
 from django.db.models import F
