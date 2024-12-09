@@ -1,5 +1,9 @@
 from django.shortcuts import render, get_object_or_404
+<<<<<<< HEAD
 from django.http import HttpResponse, Http404,HttpResponseRedirect
+=======
+from django.http import HttpResponse, Http404, HttpResponseRedirect
+>>>>>>> 28dfa9e49e2ee2e34f303061a09b81a73157f7b4
 from .models import Question, Choice
 from django.template import loader
 from django.db.models import F
@@ -7,19 +11,19 @@ from django.urls import reverse
 # Create your views here.
 
 # def index(request):
-#     latest_question_list = Question.objects.order_by('-pub_date')[:5]
-#     template = loader.get_template("index.html")
+#     lastest_question_list = Question.objects.order_by('-pub_date')[:5]
 #     context = {
-#         'latest_question_list':latest_question_list
+#         "lastest_question_list" : lastest_question_list
 #     }
-#     return HttpResponse(template.render(context,request))
+#     return render(request, 'index.html',context)
 
 def index(request):
-    lastest_question_list = Question.objects.order_by('-pub_date')[:5]
+    latest_question_list = Question.objects.order_by("-pub_date")[:5]
+    template = loader.get_template("index.html")
     context = {
-        "lastest_question_list" : lastest_question_list
+        "latest_question_list": latest_question_list,
     }
-    return render(request, 'index.html',context)
+    return HttpResponse(template.render(context, request))
 
 
 def detail(request, question_id):
@@ -54,6 +58,7 @@ def results(request, question_id):
 #     return HttpResponse("You're voting on question %s." % question_id)
 
 def vote(request, question_id):
+<<<<<<< HEAD
     
     question = get_object_or_404(Question, pk=question_id)
     
@@ -67,3 +72,15 @@ def vote(request, question_id):
         selected_choice.save()
         
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+=======
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST["choice"])
+    except (KeyError, Choice.DoesNotExist):
+        return render(request,"question_detail.html",{"question": question,"error_message": "You didn't select a choice",},)
+    else:
+        selected_choice.votes = F("votes") + 1
+        selected_choice.save()
+    return HttpResponseRedirect(reverse("results", args=(question.id,)))
+
+>>>>>>> 28dfa9e49e2ee2e34f303061a09b81a73157f7b4
