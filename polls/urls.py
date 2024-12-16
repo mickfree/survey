@@ -4,7 +4,7 @@ from .views import *
 app_name = 'polls'
 
 urlpatterns = [
-        path('', index , name = 'hello'),
+        path('', IndexView.as_view() , name = 'hello'),
         # ex: /polls/5/
         path('<int:question_id>/detail/', detail, name='detail'),
         path('<int:question_id>/results/', results, name='results'),

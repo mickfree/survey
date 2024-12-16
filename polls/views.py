@@ -4,6 +4,7 @@ from .models import Question, Choice
 from django.template import loader
 from django.db.models import F
 from django.urls import reverse
+from django.views.generic import ListView
 # Create your views here.
 
 # def index(request):
@@ -13,14 +14,21 @@ from django.urls import reverse
 #     }
 #     return render(request, 'index.html',context)
 
-def index(request):
-    latest_question_list = Question.objects.order_by("-pub_date")[:5]
-    template = loader.get_template("index.html")
-    context = {
-        "latest_question_list": latest_question_list,
-    }
-    return HttpResponse(template.render(context, request))
+# def index(request):
+#     latest_question_list = Question.objects.order_by("-pub_date")[:5]
+#     template = loader.get_template("index.html")
+#     context = {
+#         "latest_question_list": latest_question_list,
+#     }
+#     return HttpResponse(template.render(context, request))
 
+class IndexView(ListView):
+    template_name = "index.html"
+    context_object_name = "latest_question_list"
+    
+    def get_queryset(self):
+        """Retorna las 5 ultimas preguntas publicadas"""
+        return Question.objects.order_by('pub_date')[:5]
 
 def detail(request, question_id):
     try:
