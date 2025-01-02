@@ -61,6 +61,7 @@ def results(request, question_id):
 # def vote(request, question_id):
 #     return HttpResponse("You're voting on question %s." % question_id)
 
+
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
@@ -70,4 +71,4 @@ def vote(request, question_id):
     else:
         selected_choice.votes = F("votes") + 1
         selected_choice.save()
-    return HttpResponseRedirect(reverse("results", args=(question.id,)))
+    return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
